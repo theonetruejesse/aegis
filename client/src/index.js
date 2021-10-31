@@ -1,17 +1,47 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+import ReactDOM from "react-dom";
+import App from "./App";
+import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import React, { Component } from 'react'
+
+import ParticlesBg from 'particles-bg'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+        {/* <ParticlesBg type="circle" bg={true} /> */}
+
+<ChakraProvider>
+      <ColorModeProvider
+        options={{
+          useSystemColorMode: true,
+        }}
+      >
+        <AuthProvider>
+          <Router>
+            <App />
+          </Router>
+        </AuthProvider>
+      </ColorModeProvider>
+    </ChakraProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// // For Testing Purposes Only:
+// import { DateAndTimePicker } from "./components/DateAndTimePicker";
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <ChakraProvider>
+//       <ColorModeProvider
+//         options={{
+//           useSystemColorMode: true,
+//         }}
+//       >
+//         <DateAndTimePicker  />
+//       </ColorModeProvider>
+//     </ChakraProvider>
+//   </React.StrictMode>,
+//   document.getElementById("root")
+// );

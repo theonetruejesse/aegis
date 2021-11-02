@@ -11,7 +11,7 @@
 /build
 
 # misc
-.firebase-adminsdk.json
-.test_image.jpeg
+firebase-adminsdk.json
+test_image.jpeg
 
 

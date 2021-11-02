@@ -1,0 +1,17 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/venv
+
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.firebase-adminsdk.json
+.test_image.jpeg
+
+

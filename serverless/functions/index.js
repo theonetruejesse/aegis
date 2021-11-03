@@ -1,9 +1,13 @@
 const functions = require("firebase-functions");
+const m = require("./sendMessage");
+const path = require("path");
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
+exports.clipUpload = functions.storage.object().onFinalize(async (object) => {
+  const filePath = object.name;
+  const fileName = path.basename(filePath);
+
+  m.sendMessage(
+    "Aegis Alert. Potential threat detected, please review the following link:\n http://localhost:3000/" +
+      fileName
+  );
 });

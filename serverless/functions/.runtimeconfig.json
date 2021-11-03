@@ -1,0 +1,10 @@
+{
+  "twilio": {
+    "numbers": {
+      "client": "+19254873772",
+      "twilio": "+13203968058"
+    },
+    "sid": "AC7ed69f2740a5cd14793b45eab5f61d5e",
+    "token": "e2f12f8e303f0e9b60d5eea1199ca3e8"
+  }
+}

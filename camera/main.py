@@ -1,5 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, storage
+import uuid
 
 print("begin\n")
 
@@ -10,7 +11,11 @@ firebase_admin.initialize_app(
 
 fileName = "test_image.jpeg"
 bucket = storage.bucket()
-blob = bucket.blob(fileName)
+
+# create unique name for the file
+# garuntees unique link for the frontend
+id = uuid.uuid4()
+blob = bucket.blob(str(id))
 blob.upload_from_filename(fileName)
 
 blob.make_public()

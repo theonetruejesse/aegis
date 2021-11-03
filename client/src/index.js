@@ -13,11 +13,11 @@ ReactDOM.render(
           useSystemColorMode: true,
         }}
       >
-        {/* <AuthProvider> */}
-        <Router>
-          <App />
-        </Router>
-        {/* </AuthProvider> */}
+        <AuthProvider>
+          <Router>
+            <App />
+          </Router>
+        </AuthProvider>
       </ColorModeProvider>
     </ChakraProvider>
   </React.StrictMode>,

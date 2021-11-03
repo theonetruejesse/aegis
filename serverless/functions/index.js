@@ -7,7 +7,7 @@ exports.clipUpload = functions.storage.object().onFinalize(async (object) => {
   const fileName = path.basename(filePath);
 
   m.sendMessage(
-    "Aegis Alert. Potential threat detected, please review the following link:\n http://localhost:3000/" +
+    "Aegis Alert. Potential threat detected, please review the following link:\n http://localhost:3000/vid/" +
       fileName
   );
 });

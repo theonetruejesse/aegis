@@ -1,13 +1,16 @@
 import { Wrapper } from "../components/Wrapper";
-import { Box, Button, Link, Heading } from "@chakra-ui/react";
+import { Box, Button, Link, Heading, useQuery } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { InputField } from "../components/InputField";
 import { useHistory, Link as ReactLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
+// don't think there's a need, but lemme know if I should add
+
 function Register() {
   const { signup } = useAuth();
   const history = useHistory();
+  const query = useQuery();
 
   return (
     <Wrapper variant="small">
@@ -22,7 +25,8 @@ function Register() {
 
             try {
               await signup(values.email, values.password);
-              history.push("/");
+              const link = query.get("next") || "/";
+              history.push(link);
             } catch {
               setErrors("Failed to create an account");
             }

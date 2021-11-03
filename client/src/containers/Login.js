@@ -1,13 +1,15 @@
 import { Wrapper } from "../components/Wrapper";
-import { Box, Button, Link, Heading } from "@chakra-ui/react";
+import { Box, Button, Link, Heading, Text } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { InputField } from "../components/InputField";
-import { useHistory, Link as ReactLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useQuery } from "../utils/useQuery";
 import { useAuth } from "../contexts/AuthContext";
 
 function Login() {
   const { login } = useAuth();
   const history = useHistory();
+  const query = useQuery();
 
   return (
     <Wrapper variant="small">
@@ -18,7 +20,8 @@ function Login() {
           onSubmit={async (values, { setErrors }) => {
             try {
               await login(values.email, values.password);
-              history.push("/");
+              const link = query.get("next") || "/";
+              history.push(link);
             } catch {
               setErrors("Failed to log in");
             }
@@ -48,10 +51,15 @@ function Login() {
         </Formik>
       </Box>
       <Box mt={3} ml={5}>
-        Don't have an account yet?{" "}
+        {/* Don't have an account yet?{" "}
         <Link as={ReactLink} to="/register" color="teal">
           Register here.
-        </Link>
+        </Link> */}
+        Contact admin{" "}
+        <Link color="teal" key="Email" href="mailto:the.jesse.jlee@gmail.com">
+          here
+        </Link>{" "}
+        to register.
       </Box>
     </Wrapper>
   );

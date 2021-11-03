@@ -13,7 +13,7 @@ fileName = "test_image.jpeg"
 bucket = storage.bucket()
 
 # create unique name for the file
-# garuntees unique link for the frontend
+# generates unique link for the frontend
 id = uuid.uuid4()
 blob = bucket.blob(str(id))
 blob.upload_from_filename(fileName)

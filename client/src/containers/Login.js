@@ -1,5 +1,5 @@
 import { Wrapper } from "../components/Wrapper";
-import { Box, Button, Link, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Link, Heading } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { InputField } from "../components/InputField";
 import { useHistory } from "react-router-dom";

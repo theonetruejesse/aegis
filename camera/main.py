@@ -2,6 +2,9 @@ import firebase_admin
 from firebase_admin import credentials, storage
 import uuid
 
+# to activate: source venv/bin/activate
+# to run: python main.py
+
 print("begin\n")
 
 cred = credentials.Certificate('firebase-adminsdk.json')
@@ -9,7 +12,8 @@ cred = credentials.Certificate('firebase-adminsdk.json')
 firebase_admin.initialize_app(
     cred, {'storageBucket': 'aegis-5fd8e.appspot.com'})
 
-fileName = "test_image.jpeg"
+# fileName = "test_image.jpeg"
+fileName = "tokkinghead.mp4"
 bucket = storage.bucket()
 
 # create unique name for the file

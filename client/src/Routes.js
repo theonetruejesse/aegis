@@ -13,7 +13,10 @@ export default function Routes() {
       <PrivateRoute exact path="/vid/:id" component={Vid} />
       <Route exact path="/login" render={() => <Login />} />
       <PrivateRoute path="/" component={Home} />
-      {/* <Route exact path="/register" render={() => <Register />} /> */}
+      {/* 
+      Not implemented for security purposes, let me know if needed:
+      <Route exact path="/register" render={() => <Register />} /> 
+      */}
     </Switch>
   );
 }

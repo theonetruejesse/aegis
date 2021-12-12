@@ -12,8 +12,7 @@ cred = credentials.Certificate('firebase-adminsdk.json')
 firebase_admin.initialize_app(
     cred, {'storageBucket': 'aegis-5fd8e.appspot.com'})
 
-# fileName = "test_image.jpeg"
-fileName = "tokkinghead.mp4"
+fileName = "test_image.jpeg"
 bucket = storage.bucket()
 
 # create unique name for the file

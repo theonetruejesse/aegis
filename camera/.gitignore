@@ -13,5 +13,7 @@
 # misc
 firebase-adminsdk.json
 test_image.jpeg
-
-
+gun.jpg
+haarcascade_frontalface_default.xml
+test.py
+test2.py

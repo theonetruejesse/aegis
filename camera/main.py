@@ -115,8 +115,8 @@ def main():
                 break
             if recordingCounter == 5:
                 break
-        cap.release()
-        cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 # runs main function, loop for processing ml

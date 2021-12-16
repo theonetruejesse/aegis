@@ -6,6 +6,12 @@ import time
 import firebase_admin
 from firebase_admin import credentials, storage
 
+# to run code:
+# 1) source venv/bin/activate
+# 2) python main.py
+
+# similar to .mp4 or other endings, this is black magic, use with vp80
+container = ".webm"
 
 cred = credentials.Certificate('firebase-adminsdk.json')
 firebase_admin.initialize_app(
@@ -16,18 +22,21 @@ bucket = storage.bucket()
 def uploadFootage(fileId, fileName):
     # instantiates and uploads to firebase
     global bucket
-    # has bug rn, unable to play recorded vid
     print("begin\n")
-    blob = bucket.blob(str(fileId))
+    blob = bucket.blob(str(fileId) + container)
     blob.upload_from_filename(fileName)
     blob.make_public()
     print("your file url", blob.public_url)
     print("\nend")
 
 
+# all super subjective, figure out combo
+# reorganize variables in general lol
 counter = 0
 startTimer = 0
 recordingCounter = 0
+maxWait = 10
+requiredFrames = 40
 
 
 def isProcessing(out, frame, vidId, vidName):
@@ -37,9 +46,8 @@ def isProcessing(out, frame, vidId, vidName):
     global counter
     global startTimer
     global recordingCounter
-
-    # todo -> rn arbitary, based on my machine's framerate, adjust accordingly
-    requiredLength = 50
+    global requiredFrames
+    global maxWait
 
     elapsed = 0
 
@@ -49,13 +57,12 @@ def isProcessing(out, frame, vidId, vidName):
     else:
         elapsed = time.time() - startTimer
 
-        if (elapsed < 5 and counter < requiredLength):
-            vidOut = cv2.resize(frame, (640, 480))
-            out.write(vidOut)
+        if (elapsed < maxWait and counter < requiredFrames):
+            out.write(frame)
             counter += 1
             print(counter)
             return True
-        elif (counter < requiredLength and elapsed >= 5):
+        elif (counter < requiredFrames and elapsed >= maxWait):
             print("deleted footage")
             out.release()
             os.remove(vidName)
@@ -81,15 +88,24 @@ def main():
     if (cap.isOpened() == False):
         print("Unable to read camera feed")
     else:
-        frame_width = int(cap.get(3))
-        frame_height = int(cap.get(4))
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        # also pretty arbitary
+        # rn since its 10 second window for getting 40 frames, 10 fps, vid will be roughly 4 seconds
+        fps = 10
 
         vidId = uuid.uuid4()
-        vidName = 'recorded/' + str(vidId) + ".mp4"
 
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter(vidName, fourcc, 20.0,
-                              (frame_width, frame_height))
+        vidName = 'recorded/' + str(vidId) + container
+
+        # fourcc = cv2.VideoWriter_fourcc(*'h264')
+        # python3 bug, hexcode for h264
+        # fourcc = 0x34363268
+        fourcc = cv2.VideoWriter_fourcc(*'vp80')
+
+        out = cv2.VideoWriter(
+            vidName, fourcc,  fps, (width, height))
 
         while True:
             ret, frame = cap.read()
@@ -98,20 +114,21 @@ def main():
             for(x, y, w, h) in watch:
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
                 # todo -> idk what these two vars do, check
-                roi_gray = gray[y:y+h, x:x+w]
-                roi_color = frame[y:y+h, x:x+w]
+                # roi_gray = gray[y:y+h, x:x+w]
+                # roi_color = frame[y:y+h, x:x+w]
 
                 # video is no longer having frames added to it; got deleted or uploaded
                 # reset video cv2 output
                 if not isProcessing(out, frame, vidId, vidName):
                     vidId = uuid.uuid4()
-                    vidName = 'recorded/' + str(vidId) + ".mp4"
+                    vidName = 'recorded/' + str(vidId) + container
                     out = cv2.VideoWriter(
-                        vidName, fourcc, 20.0, (frame_width, frame_height))
+                        vidName, fourcc,  fps, (width, height))
 
             cv2.imshow('frame', frame)
             k = cv2.waitKey(1) & 0xff
             if k == 27:
+                os.remove(vidName)
                 break
             if recordingCounter == 5:
                 break

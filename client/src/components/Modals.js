@@ -10,43 +10,38 @@ import {
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { notifyAuthorities } from "../utils/NotifyAuthorities";
-import { storage } from "../firebase";
+// import { storage } from "../firebase";
 
 export const NoThreat = (props) => {
   const history = useHistory();
-  const pathname = window.location.pathname;
+  // const pathname = window.location.pathname;
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bgColor="white">
         <ModalHeader>No Threat Detected Confirmation</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          No threat has been detected, please confirm to delete this footage.
+          Please confirm that no threat has been detected. You can view the
+          footage in home later.
         </ModalBody>
 
         <ModalFooter>
           <Button
-            colorScheme="blue"
+            bgColor="primary.100"
+            _hover={{ bg: "primary.130" }}
             mr={3}
             onClick={() => {
               props.onClose();
+              // incase we just want to delete footage
               // removes '/vid/' from /vid/:id
-              const vidId = pathname.substring(5);
-              const storageRef = storage.ref();
-              const desertRef = storageRef.child(vidId);
+              // const vidId = pathname.substring(5);
+              // const storageRef = storage.ref();
+              // const desertRef = storageRef.child(vidId);
 
-              desertRef.delete().then(() => {
-                history.push("/");
-              });
-            }}
-          >
-            Confirm
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => {
-              props.onClose();
+              // desertRef.delete().then(() => {
+              //   history.push("/");
+              // });
               history.push("/");
             }}
           >
@@ -63,8 +58,8 @@ export const NotifyAuthorities = (props) => {
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Notify Authorities Confirmation</ModalHeader>
+      <ModalContent bgColor="white">
+        <ModalHeader>Confirm Threat!</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           Threat has been detected. Confirm to notify the authorities. Please
@@ -73,8 +68,9 @@ export const NotifyAuthorities = (props) => {
 
         <ModalFooter>
           <Button
-            colorScheme="blue"
             mr={3}
+            bgColor="primary.100"
+            _hover={{ bg: "primary.130" }}
             onClick={async () => {
               props.onClose();
               await notifyAuthorities();

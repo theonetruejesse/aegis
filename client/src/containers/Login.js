@@ -5,6 +5,7 @@ import { InputField } from "../components/InputField";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "../utils/useQuery";
 import { useAuth } from "../contexts/AuthContext";
+import { ReactComponent as Logo } from "../assets/full_logo.svg";
 
 function Login() {
   const { login } = useAuth();
@@ -13,7 +14,8 @@ function Login() {
 
   return (
     <Wrapper variant="small">
-      <Heading p={3}>Sign into account</Heading>
+      <Logo />
+      {/* <Heading p={3}>Sign into account</Heading> */}
       <Box shadow="md" borderWidth="1px" borderRadius="md" p={5}>
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -40,7 +42,8 @@ function Login() {
               </Box>
               <Button
                 type="submit"
-                colorScheme="teal"
+                bgColor="primary.100"
+                _hover={{ bg: "primary.130" }}
                 isLoading={isSubmitting}
                 mt={4}
               >
@@ -56,7 +59,11 @@ function Login() {
           Register here.
         </Link> */}
         Contact admin{" "}
-        <Link color="teal" key="Email" href="mailto:the.jesse.jlee@gmail.com">
+        <Link
+          color="primary.130"
+          key="Email"
+          href="mailto:the.jesse.jlee@gmail.com"
+        >
           here
         </Link>{" "}
         to register.

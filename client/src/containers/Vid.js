@@ -7,10 +7,20 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-
+import { storage } from "../firebase";
+import React, { useEffect, useState } from "react";
 import { NoThreat, NotifyAuthorities } from "../components/Modals";
 
 export default function Vid(props) {
+  const vidId = props.match.params.id;
+  const [urlString, setUrlString] = useState("");
+
+  const gsReference = storage.refFromURL(
+    `gs://aegis-5fd8e.appspot.com/${vidId}.webm`
+  );
+  gsReference.getDownloadURL().then((url) => setUrlString(url));
+
+  useEffect(() => {}, [urlString]);
   const {
     isOpen: isNoThreatOpen,
     onOpen: onNoThreatOpen,
@@ -22,10 +32,6 @@ export default function Vid(props) {
     onOpen: onNotifyAuthoritiesOpen,
     onClose: onNotifyAuthoritiesClose,
   } = useDisclosure();
-
-  const vidId = props.match.params.id;
-  const urlString =
-    "https://storage.googleapis.com/aegis-5fd8e.appspot.com/" + vidId;
 
   return (
     <>

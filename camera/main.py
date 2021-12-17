@@ -36,7 +36,7 @@ counter = 0
 startTimer = 0
 recordingCounter = 0
 maxWait = 10
-requiredFrames = 40
+requiredFrames = 30
 
 
 def isProcessing(out, frame, vidId, vidName):
@@ -92,7 +92,7 @@ def main():
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
         # also pretty arbitary
-        # rn since its 10 second window for getting 40 frames, 10 fps, vid will be roughly 4 seconds
+        # rn since its 10 second window for getting 30 frames, 10 fps, vid will be roughly 3 seconds
         fps = 10
 
         vidId = uuid.uuid4()

@@ -82,7 +82,6 @@ def isProcessing(out, frame, vidId, vidName):
 def main():
     watch_cascade = cv2.CascadeClassifier('guncascade.xml')
     # Gun detecting haar cascade model from:
-    # https://github.com/Saksham00799/opencv-gun-detection/blob/master/classifier/cascade.xml
     cap = cv2.VideoCapture(0)
 
     if (cap.isOpened() == False):
